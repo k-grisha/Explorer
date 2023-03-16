@@ -1,0 +1,21 @@
+
+---
+server:
+  port: 8080
+
+
+
+spring:
+#  application.name: merchant-configuration-service
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      ADJUST_DATES_TO_CONTEXT_TIME_ZONE: false
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      READ_ENUMS_USING_TO_STRING: true
+  datasource:
+
+  sql:
+    init:
+      mode: ALWAYS
