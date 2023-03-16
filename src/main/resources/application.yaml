@@ -15,6 +15,7 @@ spring:
       mode: ALWAYS
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
+    show-sql: true
+#    hibernate:
 #      ddl-auto: create-drop
 
