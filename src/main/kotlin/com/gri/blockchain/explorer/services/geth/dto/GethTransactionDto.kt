@@ -12,6 +12,6 @@ data class GethTransactionDto(
     val to: String,
     val transactionIndex: String?,
     val value: String,
-    val type: String?,
+    val type: String,
     val chainId: String?
 )
