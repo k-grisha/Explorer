@@ -5,6 +5,7 @@ import com.gri.blockchain.explorer.entity.BlockEntity
 import com.gri.blockchain.explorer.entity.TransactionEntity
 import com.gri.blockchain.explorer.services.geth.dto.GethBlockDto
 import com.gri.blockchain.explorer.services.geth.dto.GethTransactionDto
+import com.gri.blockchain.explorer.services.geth.dto.GethTransactionReceiptDto
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -52,6 +53,16 @@ class GethBlockchainService(
         print(feeSum)
         print("gasSum= $gasSum")
         return feeSum ?: BigDecimal.ZERO
+    }
+
+
+    fun fetchTransactionReceipt(transactionHash: String): GethTransactionReceiptDto? {
+        val entity: HttpEntity<JsonRpcRequest> = HttpEntity(JsonRpcRequest.getTransactionReceiptByHash(transactionHash), headers)
+        return restTemplate.exchange(
+            url,
+            HttpMethod.POST,
+            entity,
+            object : ParameterizedTypeReference<JsonRpcResponse<GethTransactionReceiptDto>>() {}).body?.result
     }
 
     fun fetchBlockEntity(blockNumber: Long): BlockEntity? {
@@ -120,6 +131,9 @@ class GethBlockchainService(
         companion object {
             fun getBlockByNumber(blockNumber: String) =
                 JsonRpcRequest(method = "eth_getBlockByNumber", params = listOf(blockNumber, true))
+
+            fun getTransactionReceiptByHash(hash: String) =
+                JsonRpcRequest(method = "eth_getTransactionReceipt", params = listOf(hash))
         }
     }
 }

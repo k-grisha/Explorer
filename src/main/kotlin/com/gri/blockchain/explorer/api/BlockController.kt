@@ -4,6 +4,7 @@ import com.gri.blockchain.explorer.entity.BlockEntity
 import com.gri.blockchain.explorer.repositories.BlockRepository
 import com.gri.blockchain.explorer.services.geth.GethBlockchainService
 import com.gri.blockchain.explorer.services.geth.dto.GethBlockDto
+import com.gri.blockchain.explorer.services.geth.dto.GethTransactionReceiptDto
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,6 +24,10 @@ class BlockController(
         return gethBlockchainService.calcFee(blockNumber)
     }
 
+    @GetMapping("/api/v1/transaction/{transactionHash}/receipt")
+    fun getTransactionReceipt(@PathVariable transactionHash: String): GethTransactionReceiptDto? {
+        return gethBlockchainService.fetchTransactionReceipt(transactionHash)
+    }
 
     @GetMapping("/api/v1/blocks/{blockNumber}/entity")
     fun getBlockHandle(@PathVariable blockNumber: Long): BlockEntity? {
