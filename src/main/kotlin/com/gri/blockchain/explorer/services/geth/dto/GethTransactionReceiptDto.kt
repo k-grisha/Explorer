@@ -11,6 +11,6 @@ data class GethTransactionReceiptDto(
     val status: String,
     val to: String,
     val transactionHash: String,
-    val transactionIndex: String?,
+    val transactionIndex: String,
     val type: String
 )

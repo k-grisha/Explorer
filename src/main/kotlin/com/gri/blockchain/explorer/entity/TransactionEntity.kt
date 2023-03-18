@@ -2,31 +2,48 @@ package com.gri.blockchain.explorer.entity
 
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import java.math.BigDecimal
 
-@Table("traansaction")
+@Table("eth_transaction")
 class TransactionEntity(
     @Id
-    @Column("number")
+    @Column("transaction_hash")
     var hash: String,
-    @Column("number")
+    @Column("block_number")
     var blockNumber: Long,
-    @Column("from")
+    @Column("from_adr")
     var from: String,
-    @Column("to")
+    @Column("to_adr")
     var to: String,
     @Column("value")
     var value: BigDecimal,
     @Column("gas")
     var gas: Long,
-    @Column("gasPrice")
-    val gasPrice: BigDecimal,
-    @Column("maxFeePerGas")
-    val maxFeePerGas: BigDecimal?,
-    @Column("maxFeePerGas")
-    val maxPriorityFeePerGas: BigDecimal?,
+    @Column("gas_price")
+    var gasPrice: BigDecimal,
+    @Column("max_fee_per_gas")
+    var maxFeePerGas: BigDecimal?,
+    @Column("max_fee_per_gas")
+    var maxPriorityFeePerGas: BigDecimal?,
     @Column("type")
-    val type: Int
+    var type: Int,
+
+    @Column("cumulative_gas_used")
+    var cumulativeGasUsed: Long,
+    @Column("gas_used")
+    var gasUsed: Long,
+    @Column("effective_gas_price")
+    var effectiveGasPrice: BigDecimal,
+    @Column("status")
+    var status: Int,
+    @Column("transaction_index")
+    var transactionIndex: Int,
+
+
+    @Version
+    var version: Int? = null
+
 )

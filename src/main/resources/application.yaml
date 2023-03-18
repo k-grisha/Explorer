@@ -13,9 +13,20 @@ spring:
   sql:
     init:
       mode: ALWAYS
+  jdbc:
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 #    hibernate:
-#      ddl-auto: create-drop
+#      ddl-auto: create
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        jdbc:
+#          core:
+#            JdbcTemplate: debug
+
 
