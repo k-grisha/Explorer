@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS eth_block
     block_number     bigint not null primary key,
     base_fee_per_gas numeric(38, 18),
     miner            varchar(42),
+    gas_used         bigint,
     timestamp        bigint not null,
     version          int
 );

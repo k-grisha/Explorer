@@ -19,10 +19,13 @@ class BlockEntity(
     var number: Long,
     @Column("miner")
     var miner: String,
+    @Column("gas_used")
+    var gasUsed: Long,
     @Column("timestamp")
     var timestamp: Long,
     @Column("base_fee_per_gas")
     var baseFeePerGas: BigDecimal,
+
 
     @MappedCollection(idColumn = "block_number")
     var transactions: Set<TransactionEntity>,

@@ -26,7 +26,7 @@ class TransactionEntity(
     var gasPrice: BigDecimal,
     @Column("max_fee_per_gas")
     var maxFeePerGas: BigDecimal?,
-    @Column("max_fee_per_gas")
+    @Column("max_priority_fee_per_gas")
     var maxPriorityFeePerGas: BigDecimal?,
     @Column("type")
     var type: Int,

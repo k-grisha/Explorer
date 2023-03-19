@@ -3,6 +3,7 @@ package com.gri.blockchain.explorer.services.geth.dto
 data class GethBlockDto(
     val hash: String,
     val baseFeePerGas: String,
+    val gasUsed: String,
     val miner: String,
     val number: String,
     val parentHash: String,
