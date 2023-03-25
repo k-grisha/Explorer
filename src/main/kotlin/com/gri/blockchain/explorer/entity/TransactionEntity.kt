@@ -17,7 +17,7 @@ class TransactionEntity(
     @Column("from_adr")
     var from: String,
     @Column("to_adr")
-    var to: String,
+    var to: String?,
     @Column("value")
     var value: BigDecimal,
     @Column("gas")

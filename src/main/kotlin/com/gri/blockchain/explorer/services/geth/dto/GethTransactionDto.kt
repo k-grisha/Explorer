@@ -9,7 +9,7 @@ data class GethTransactionDto(
     val maxFeePerGas: String?,
     val maxPriorityFeePerGas: String?,
     val hash: String,
-    val to: String,
+    val to: String?,
     val transactionIndex: String?,
     val value: String,
     val type: String,

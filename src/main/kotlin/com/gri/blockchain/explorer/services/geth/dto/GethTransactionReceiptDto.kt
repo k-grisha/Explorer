@@ -9,7 +9,7 @@ data class GethTransactionReceiptDto(
     val from: String,
     val gasUsed: String,
     val status: String,
-    val to: String,
+    val to: String?,
     val transactionHash: String,
     val transactionIndex: String,
     val type: String
