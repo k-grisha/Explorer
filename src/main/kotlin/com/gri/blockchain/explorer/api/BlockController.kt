@@ -38,7 +38,7 @@ class BlockController(
     }
 
     @GetMapping("/api/v1/blocks/latest/entity")
-    fun getLatestªBlockEntity(): BlockEntity? {
+    fun getLatestBlockEntity(): BlockEntity? {
         return blockService.getLatestBlockEntity()
     }
 
