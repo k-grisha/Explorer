@@ -34,14 +34,23 @@ class BlockService(
         return blockRepository.findById(blockNumber).getOrNull() ?: fetchAndPersistBlock(blockNumber)
     }
 
+    fun getLatestBlockEntity(): BlockEntity? {
+        return blockRepository.fetchLatestBlock()
+    }
+
     @Transactional
     fun fetchAndPersistBlock(blockNumber: Long): BlockEntity {
-        val block = fetchBlockEntity(blockNumber) ?: throw java.lang.RuntimeException("Can't fetch  block $blockNumber")
-        return blockRepository.save(block)
+        var block = blockRepository.findById(blockNumber).getOrNull()
+        if (block == null) {
+            block = fetchBlockEntityFromBlockChain(blockNumber)
+                ?: throw java.lang.RuntimeException("Can't fetch  block $blockNumber")
+            blockRepository.save(block)
+        }
+        return block
     }
 
 
-    private fun fetchBlockEntity(blockNumber: Long): BlockEntity? {
+    private fun fetchBlockEntityFromBlockChain(blockNumber: Long): BlockEntity? {
         val blockDto = gethBlockchainClient.getBlock(blockNumber)
         val transactionEntities = blockDto?.transactions?.map {
             val transactionReceipt = gethBlockchainClient.getTransactionReceipt(it.hash)

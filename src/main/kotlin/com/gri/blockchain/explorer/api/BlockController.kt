@@ -19,6 +19,12 @@ class BlockController(
     val blockchainClient: BlockchainClient
 ) {
 
+//    @PostMapping("/api/v1/blocks/all-from/{blockNumber}")
+//    fun persistAllBlock(@PathVariable blockNumber: Long): BlockEntity? {
+//        if (blockNumber <= 0) throw ResponseStatusException(HttpStatus.BAD_REQUEST, "blockNumber should be >0");
+//        return blockService.fetchAndPersistAllBlockFrom(blockNumber)
+//    }
+
     @PostMapping("/api/v1/blocks/{blockNumber}/")
     fun persistBlock(@PathVariable blockNumber: Long): BlockEntity? {
         if (blockNumber <= 0) throw ResponseStatusException(HttpStatus.BAD_REQUEST, "blockNumber should be >0");
@@ -29,6 +35,11 @@ class BlockController(
     fun getBlockEntity(@PathVariable blockNumber: Long): BlockEntity? {
         if (blockNumber <= 0) throw ResponseStatusException(HttpStatus.BAD_REQUEST, "blockNumber should be >0");
         return blockService.getBlockEntity(blockNumber)
+    }
+
+    @GetMapping("/api/v1/blocks/latest/entity")
+    fun getLatestªBlockEntity(): BlockEntity? {
+        return blockService.getLatestBlockEntity()
     }
 
     @GetMapping("/api/v1/blocks/{blockNumber}/fee")
