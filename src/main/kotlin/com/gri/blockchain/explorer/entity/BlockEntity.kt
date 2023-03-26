@@ -7,7 +7,6 @@ import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.MappedCollection
 import org.springframework.data.relational.core.mapping.Table
 import java.math.BigDecimal
-//import java.sql.Types.
 
 
 @Table("eth_block")
@@ -25,9 +24,10 @@ class BlockEntity(
     @Column("base_fee_per_gas")
     var baseFeePerGas: BigDecimal,
 
-
     @MappedCollection(idColumn = "block_number")
     var transactions: Set<TransactionEntity>,
+
+    var rewardEntity: RewardEntity?,
 
     @Version
     var version: Int? = null
