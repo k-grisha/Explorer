@@ -17,8 +17,8 @@ class GethBlockchainClient(
 ) : BlockchainClient {
     private final val headers = HttpHeaders()
 
-//        private final val url = "http://localhost:8545"
-    private final val url = "https://mainnet.infura.io/v3/54628016bc2c4a06aac27c7f26f8cb45"
+        private final val url = "http://localhost:8545"
+//    private final val url = "https://mainnet.infura.io/v3/54628016bc2c4a06aac27c7f26f8cb45"
 
     init {
         headers.contentType = MediaType.APPLICATION_JSON

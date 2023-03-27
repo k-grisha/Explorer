@@ -5,6 +5,7 @@ import com.gri.blockchain.explorer.entity.RewardEntity
 import com.gri.blockchain.explorer.entity.TransactionEntity
 import com.gri.blockchain.explorer.repositories.BlockRepository
 import com.gri.blockchain.explorer.repositories.MevBuilderRepository
+import com.gri.blockchain.explorer.repositories.RewardRepository
 import com.gri.blockchain.explorer.services.geth.dto.GethBlockDto
 import com.gri.blockchain.explorer.services.geth.dto.GethTransactionDto
 import com.gri.blockchain.explorer.services.geth.dto.GethTransactionReceiptDto
@@ -18,7 +19,8 @@ import kotlin.jvm.optionals.getOrNull
 class BlockService(
     val blockRepository: BlockRepository,
     val gethBlockchainClient: BlockchainClient,
-    val mevBuilderRepository: MevBuilderRepository
+    val mevBuilderRepository: MevBuilderRepository,
+    val rewardRepository: RewardRepository
 ) {
 
     private final val divider18 = BigDecimal("1000000000000000000")
@@ -26,6 +28,14 @@ class BlockService(
 
     fun getLatestPersistedBlockEntity(): BlockEntity? {
         return blockRepository.fetchLatestBlock()
+    }
+
+    @Transactional
+    fun updateRewards() {
+        blockRepository.findAll().forEach { block ->
+            block.rewardEntity = getReward(block)
+            blockRepository.save(block)
+        }
     }
 
     @Transactional
@@ -40,23 +50,24 @@ class BlockService(
 
 
     private fun getReward(blockEntity: BlockEntity): RewardEntity {
-        val mevRewardValue = getMevReward(blockEntity)
+        val mevReward = getMevReward(blockEntity)
         val mevBuilderName = mevBuilderRepository.findByAddressIgnoreCase(blockEntity.miner)
         return RewardEntity(
             blockEntity.number,
             blockEntity.miner,
             mevBuilderName?.name,
             calcFee(blockEntity),
-            mevRewardValue,
-            mevRewardValue != null || mevBuilderName != null
+            mevReward?.second,
+            mevReward?.first,
+            mevReward != null || mevBuilderName != null
         )
     }
 
-    private fun getMevReward(block: BlockEntity): BigDecimal? {
+    private fun getMevReward(block: BlockEntity): Pair<String, BigDecimal>? {
         val lastTransaction = block.transactions.maxBy { it.transactionIndex }
         return if (block.miner != lastTransaction.from) null
         else
-            lastTransaction.value
+            Pair(lastTransaction.to!!, lastTransaction.value)
 
     }
 

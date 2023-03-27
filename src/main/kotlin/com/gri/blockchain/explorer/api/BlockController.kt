@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
@@ -18,6 +19,11 @@ class BlockController(
     val blockService: BlockService,
     val blockchainClient: BlockchainClient
 ) {
+
+    @PutMapping("/api/v1/rewards/update/")
+    fun updateRewards(){
+        blockService.updateRewards()
+    }
 
     @PostMapping("/api/v1/blocks/all-from/{blockNumber}")
     fun persistAllBlock(@PathVariable blockNumber: Long): Int? {
