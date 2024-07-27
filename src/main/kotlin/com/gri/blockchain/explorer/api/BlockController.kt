@@ -25,7 +25,7 @@ class BlockController(
         blockService.updateRewards()
     }
 
-    @PostMapping("/api/v1/blocks/all-from/{blockNumber}")
+    @PostMapping("/api/v1/blocks/all-after/{blockNumber}")
     fun persistAllBlock(@PathVariable blockNumber: Long): Int? {
         if (blockNumber <= 0) throw ResponseStatusException(HttpStatus.BAD_REQUEST, "blockNumber should be >0");
         var i = 0
